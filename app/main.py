@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List  # Import List from typing
 from . import crud, models, schemas
 from .database import SessionLocal, engine, get_db
+from fastapi.middleware.cors import CORSMiddleware
 
 # Инициализация базы данных
 models.Base.metadata.create_all(bind=engine)
@@ -42,3 +43,17 @@ def delete_news(news_id: int, db: Session = Depends(get_db)):
     if db_news is None:
         raise HTTPException(status_code=404, detail="Новость не найдена")
     return db_news
+
+origins = [
+    # "http://localhost:3000",
+    "http://http://100.24.66.165/",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+                   "Authorization"],
+)
