@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List  # Import List from typing
 from . import crud, models, schemas
 from .database import SessionLocal, engine, get_db
 
@@ -14,7 +15,7 @@ def create_news(news: schemas.NewsCreate, db: Session = Depends(get_db)):
     return crud.create_news(db=db, news=news)
 
 # Получение списка новостей
-@app.get("/news/", response_model=list[schemas.News])
+@app.get("/news/", response_model=List[schemas.News])  # Use List[schemas.News]
 def read_news(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return crud.get_news_list(db=db, skip=skip, limit=limit)
 
