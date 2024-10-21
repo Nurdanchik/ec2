@@ -46,7 +46,7 @@ def delete_news(news_id: int, db: Session = Depends(get_db)):
 
 origins = [
     # "http://localhost:3000",
-    "http://http://100.24.66.165/",
+    "http://100.24.66.165/",
 ]
 
 app.add_middleware(
